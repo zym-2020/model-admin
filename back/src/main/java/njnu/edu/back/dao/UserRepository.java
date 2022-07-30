@@ -19,4 +19,8 @@ public interface UserRepository extends MongoRepository<User, String> {
     Page<User> findAllByMemberIdContains(String memberId, Pageable pageable);
     Page<User> findAllByEmailContains(String email, Pageable pageable);
     Page<User> findAllByTeamIdContains(String teamId, Pageable pageable);
+
+    User findByMemberId(String memberId);
+    User findByEmail(String email);
+    User findByTeamId(String teamId);
 }

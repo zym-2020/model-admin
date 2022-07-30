@@ -1,0 +1,11 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb://172.21.213.125:27017/model
+
+uploadAddress:
+  /home/zym/homework/upload/
+tempAddress:
+  /home/zym/homework/temp/
+homeworkAddress:
+  /home/zym/homework/upload/homework/

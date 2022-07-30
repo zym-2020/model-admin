@@ -16,14 +16,18 @@
       </el-form-item>
     </el-form>
     <div class="btn">
-      <el-button type="primary" v-if="type === 'add'">添加</el-button>
-      <el-button type="success" v-else>修改</el-button>
+      <el-button type="primary" v-if="type === 'add'" @click="addClick"
+        >添加</el-button
+      >
+      <el-button type="success" v-else @click="editClick">修改</el-button>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, onMounted, reactive, ref } from "vue";
+import { updateUserInfo } from "@/api/request";
+import { notice } from "@/utils/notice";
 export default defineComponent({
   props: {
     type: {
@@ -33,7 +37,8 @@ export default defineComponent({
       type: Object,
     },
   },
-  setup(props) {
+  emits: ["returnData"],
+  setup(props, context) {
     const skeletonFlag = ref(true);
     const form = reactive({
       name: "",
@@ -45,6 +50,21 @@ export default defineComponent({
     const type = computed(() => {
       return props.type;
     });
+
+    const addClick = () => {
+      context.emit("returnData", { flag: false, data: form });
+    };
+
+    const editClick = async () => {
+      const data = await updateUserInfo(form, (props.userInfo as any).id);
+      if (data != null) {
+        if ((data as any).code === 0) {
+          context.emit("returnData", { flag: true, data: form });
+        } else {
+          notice("warning", "警告", (data as any).msg);
+        }
+      }
+    };
 
     onMounted(() => {
       if (props.type === "edit") {
@@ -60,6 +80,8 @@ export default defineComponent({
       form,
       type,
       skeletonFlag,
+      editClick,
+      addClick,
     };
   },
 });

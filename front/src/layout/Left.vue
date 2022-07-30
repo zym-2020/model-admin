@@ -4,7 +4,7 @@
       active-text-color="#ffd04b"
       background-color="#545c64"
       class="el-menu-vertical-demo"
-      default-active="1"
+      :default-active="active"
       text-color="#fff"
     >
       <el-menu-item index="1" @click="menuClick">
@@ -32,10 +32,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, onMounted, ref, watch } from "vue";
 import router from "@/router";
 export default defineComponent({
   setup() {
+    const active = ref("1");
     const menuClick = (val: any) => {
       if (val.index === "1") {
         router.push({ path: "/user" });
@@ -50,7 +51,28 @@ export default defineComponent({
       }
     };
 
+    watch(
+      () => {
+        return router.currentRoute.value.name;
+      },
+      (newVal, oldVal) => {
+        if (newVal === "User") {
+          active.value = "1";
+        } else if (newVal === "Homework") {
+          active.value = "2";
+        } else if (newVal === "Apply") {
+          active.value = "3";
+        } else if (newVal === "Develop") {
+          active.value = "4";
+        } else if (newVal === "Cert") {
+          active.value = "5";
+        }
+      }
+    );
+
+
     return {
+      active,
       menuClick,
     };
   },
