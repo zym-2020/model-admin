@@ -21,4 +21,6 @@ public interface UserService {
     Page<User> delUser(String id, String type, String keyWord, int page, int size);
 
     void batchInsert(MultipartFile file, int sheetNumber);
+
+    String checkUserId(String userId);
 }

@@ -32,3 +32,31 @@ export interface HomeworkFuzzyQueryJsonData {
     page: number
     size: number
 }
+
+export interface AddCertJsonData {
+    userId: string
+    type: string
+    number: string
+}
+
+export interface CertfuzzyQuery {
+    type: string
+    keyWord: string
+    page: number
+    size: number
+}
+
+export interface UpdateCertJsonData {
+    id: string
+    userId: string
+    type: string
+    number: string
+}
+
+export interface DelCertJsonData {
+    id: string
+    type: string
+    keyWord: string
+    page: number
+    size: number
+}

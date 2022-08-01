@@ -57,4 +57,9 @@ public class UserController {
         userService.batchInsert(file,sheetNumber);
         return ResultUtils.success();
     }
+
+    @RequestMapping(value = "/checkUserId/{userId}", method = RequestMethod.GET)
+    public JsonResult checkUserId(@PathVariable String userId) {
+        return ResultUtils.success(userService.checkUserId(userId));
+    }
 }

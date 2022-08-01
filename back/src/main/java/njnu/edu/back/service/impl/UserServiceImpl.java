@@ -120,4 +120,14 @@ public class UserServiceImpl implements UserService {
             throw new MyException(ResultEnum.DEFAULT_EXCEPTION);
         }
     }
+
+    @Override
+    public String checkUserId(String userId) {
+        Optional<User> optionalUser = userRepository.findById(userId);
+        if(optionalUser.isPresent()) {
+            return optionalUser.get().getName();
+        } else {
+            throw new MyException(ResultEnum.NO_OBJECT);
+        }
+    }
 }

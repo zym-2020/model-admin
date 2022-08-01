@@ -7,7 +7,7 @@ import njnu.edu.back.dao.UserRepository;
 import njnu.edu.back.pojo.Homework;
 import njnu.edu.back.pojo.User;
 import njnu.edu.back.service.HomeworkService;
-import njnu.edu.back.utils.ZipUtil;
+import njnu.edu.back.common.utils.ZipUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;

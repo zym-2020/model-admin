@@ -22,6 +22,7 @@
     </div>
     <div class="user-main" v-if="!skeletonFlag">
       <el-table :data="tableData" border>
+        <el-table-column prop="id" label="UserId" />
         <el-table-column prop="name" label="姓名" width="180" />
         <el-table-column prop="email" label="邮箱" />
         <el-table-column prop="memberId" label="培训编号" />
@@ -56,8 +57,8 @@
         @current-change="currentChange"
       />
     </div>
-    <div style="padding: 20px 30px">
-      <el-skeleton :rows="5" animated v-if="skeletonFlag" />
+    <div style="padding: 20px 30px" v-if="skeletonFlag">
+      <el-skeleton :rows="5" animated />
     </div>
   </div>
   <el-dialog v-model="addOrEditFlag" width="400px">

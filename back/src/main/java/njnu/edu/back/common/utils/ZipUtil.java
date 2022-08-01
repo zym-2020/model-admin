@@ -1,4 +1,4 @@
-package njnu.edu.back.utils;
+package njnu.edu.back.common.utils;
 
 import net.lingala.zip4j.ZipFile;
 import njnu.edu.back.common.exception.MyException;
