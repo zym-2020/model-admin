@@ -1,6 +1,6 @@
 import { get, post, del, patch } from './axios'
 
-import { FuzzyQueryJsonData, UpdateUserInfoJsonData, DelUserJsonData, DelHomeworkJsonData } from './type'
+import { FuzzyQueryJsonData, UpdateUserInfoJsonData, DelUserJsonData, DelHomeworkJsonData, HomeworkFuzzyQueryJsonData } from './type'
 
 //user相关接口
 export async function fuzzyQuery(jsonData: FuzzyQueryJsonData) {
@@ -30,4 +30,8 @@ export async function updateHomework(id: string, state: number) {
 
 export async function delHomework(jsonData: DelHomeworkJsonData) {
     return await del(`/homework/delHomework`, jsonData)
+}
+
+export async function homeworkFuzzyQuery(jsonData: HomeworkFuzzyQueryJsonData) {
+    return await post(`/homework/fuzzyQuery`, jsonData)
 }

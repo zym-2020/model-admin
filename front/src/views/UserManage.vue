@@ -26,7 +26,7 @@
         <el-table-column prop="email" label="邮箱" />
         <el-table-column prop="memberId" label="培训编号" />
         <el-table-column prop="teamId" label="竞赛编号" />
-        <el-table-column label="操作" width="230">
+        <el-table-column label="操作" width="150">
           <template #default="scope">
             <el-button size="small" @click="edit(scope.row)">修改</el-button>
             <el-popconfirm
@@ -41,8 +41,6 @@
                 <el-button size="small" type="danger">删除</el-button>
               </template>
             </el-popconfirm>
-
-            <el-button size="small">作业情况</el-button>
           </template>
         </el-table-column>
       </el-table>

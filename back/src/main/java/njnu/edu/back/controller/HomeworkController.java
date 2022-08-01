@@ -47,4 +47,12 @@ public class HomeworkController {
     public void download(@PathVariable String fileName, HttpServletResponse response) {
         homeworkService.download(fileName, response);
     }
+
+    @RequestMapping(value = "/fuzzyQuery", method = RequestMethod.POST)
+    public JsonResult fuzzyQuery(@RequestBody JSONObject jsonObject) {
+        String memberId = jsonObject.getString("memberId");
+        int page = jsonObject.getIntValue("page");
+        int size = jsonObject.getIntValue("size");
+        return ResultUtils.success(homeworkService.fuzzyQuery(memberId, page, size));
+    }
 }

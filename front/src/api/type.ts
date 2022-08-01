@@ -26,3 +26,9 @@ export interface DelHomeworkJsonData {
     page: number
     size: number
 }
+
+export interface HomeworkFuzzyQueryJsonData {
+    memberId: string
+    page: number
+    size: number
+}

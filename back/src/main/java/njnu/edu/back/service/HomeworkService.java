@@ -20,4 +20,6 @@ public interface HomeworkService {
     Page<Homework> delHomework(String id, String memberId, int page, int size);
 
     void download(String fileName, HttpServletResponse response);
+
+    Page<Homework> fuzzyQuery(String memberId, int page, int size);
 }

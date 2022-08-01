@@ -101,4 +101,14 @@ public class HomeworkServiceImpl implements HomeworkService {
             }
         }
     }
+
+    @Override
+    public Page<Homework> fuzzyQuery(String memberId, int page, int size) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "id");
+        Pageable pageable = PageRequest.of(page, size, sort);
+        if(memberId.equals("")) {
+            return homeworkRepository.findAll(pageable);
+        }
+        return homeworkRepository.findAllByMemberId(memberId, pageable);
+    }
 }

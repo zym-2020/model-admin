@@ -1,6 +1,15 @@
 <template>
   <div class="homework-body">
-    <div class="homework-head"></div>
+    <div class="homework-head">
+      <div>
+        <el-input
+          v-model="inputValue"
+          placeholder="请输入学员编号"
+          size="small"
+        />
+      </div>
+      <el-button size="small" type="primary" @click="query">查询</el-button>
+    </div>
     <div class="homework-main" v-if="!skeletonFlag">
       <el-table :data="tableData" border :row-class-name="tableRowClassName">
         <el-table-column prop="fileName" label="存储文件名" />
@@ -25,7 +34,9 @@
             <el-button size="small" @click="updateClick(scope.row)"
               >修改</el-button
             >
-            <el-button size="small" @click="downloadClick">下载</el-button>
+            <el-button size="small" @click="downloadClick(scope.row)"
+              >下载</el-button
+            >
             <el-popconfirm
               confirm-button-text="确定"
               cancel-button-text="取消"
@@ -67,10 +78,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from "vue";
-import { findHomeworkAll, delHomework } from "@/api/request";
+import { defineComponent, onMounted, ref, watch } from "vue";
+import {
+  findHomeworkAll,
+  delHomework,
+  homeworkFuzzyQuery,
+} from "@/api/request";
 import { InfoFilled } from "@element-plus/icons-vue";
 import UploadHomework from "@/components/UpdateHomework.vue";
+
 export default defineComponent({
   components: { UploadHomework },
   setup() {
@@ -79,6 +95,8 @@ export default defineComponent({
     const skeletonFlag = ref(true);
     const updateFlag = ref(false);
     const tableData = ref<any[]>([]);
+    const memberId = ref("");
+    const inputValue = ref("");
     const formValue = ref<any>({
       name: "",
       memberId: "",
@@ -98,13 +116,29 @@ export default defineComponent({
       updateFlag.value = true;
     };
 
-    const downloadClick = () => {}
+    const downloadClick = (val: any) => {
+      window.location.href = `http://localhost:7777/homework/download/${val.fileName}`;
+    };
+
+    const query = async () => {
+      memberId.value = inputValue.value;
+      const data = await homeworkFuzzyQuery({
+        memberId: memberId.value,
+        page: currentPage.value - 1,
+        size: 20,
+      });
+      if (data != null && (data as any).code === 0) {
+        tableData.value = data.data.content;
+        total.value = data.data.totalElements;
+        currentPage.value = 1;
+      }
+    };
 
     const delClick = async (val: any) => {
       console.log(val);
       const data = await delHomework({
         id: val.id,
-        memberId: val.memberId,
+        memberId: memberId.value,
         page: currentPage.value - 1,
         size: 20,
       });
@@ -114,7 +148,17 @@ export default defineComponent({
       }
     };
 
-    const currentChange = () => {};
+    const currentChange = async (page: number) => {
+      const data = await homeworkFuzzyQuery({
+        memberId: memberId.value,
+        page: page - 1,
+        size: 20,
+      });
+      if (data != null && (data as any).code === 0) {
+        tableData.value = data.data.content;
+        total.value = data.data.totalElements;
+      }
+    };
 
     const getModelName = (number: number) => {
       if (number === 1) {
@@ -160,7 +204,9 @@ export default defineComponent({
       total,
       currentPage,
       currentChange,
-      downloadClick
+      downloadClick,
+      inputValue,
+      query,
     };
   },
 });
@@ -173,6 +219,15 @@ export default defineComponent({
     height: 40px;
     background: rgba($color: #545c64, $alpha: 0.5);
     padding: 0 20px;
+    display: flex;
+    .el-input {
+      margin-top: 7px;
+      width: 200px;
+      margin-right: 10px;
+    }
+    .el-button {
+      margin-top: 7px;
+    }
   }
   .homework-main {
     padding: 20px 30px;
