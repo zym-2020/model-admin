@@ -22,4 +22,6 @@ public interface HomeworkService {
     void download(String fileName, HttpServletResponse response);
 
     Page<Homework> fuzzyQuery(String memberId, int page, int size);
+
+    void compressHomework(int number, HttpServletResponse response);
 }

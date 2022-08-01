@@ -55,4 +55,10 @@ public class HomeworkController {
         int size = jsonObject.getIntValue("size");
         return ResultUtils.success(homeworkService.fuzzyQuery(memberId, page, size));
     }
+
+    @RequestMapping(value = "/compressHomework/{number}", method = RequestMethod.GET)
+    public void compressHomework(@PathVariable int number, HttpServletResponse response) {
+        homeworkService.compressHomework(number, response);
+
+    }
 }

@@ -9,6 +9,22 @@
         />
       </div>
       <el-button size="small" type="primary" @click="query">查询</el-button>
+
+      <el-select v-model="numberValue" size="small" placeholder="选择完成数">
+        <el-option
+          v-for="(item, index) in options"
+          :key="index"
+          :label="item"
+          :value="item"
+        />
+      </el-select>
+      <el-button
+        size="small"
+        type="primary"
+        :disabled="numberValue == ''"
+        @click="downloadAllClick"
+        >下载作业</el-button
+      >
     </div>
     <div class="homework-main" v-if="!skeletonFlag">
       <el-table :data="tableData" border :row-class-name="tableRowClassName">
@@ -97,12 +113,15 @@ export default defineComponent({
     const tableData = ref<any[]>([]);
     const memberId = ref("");
     const inputValue = ref("");
+    const numberValue = ref("");
     const formValue = ref<any>({
       name: "",
       memberId: "",
       number: "",
       state: "",
     });
+
+    const options = ["1", "2", "3", "4"];
 
     const tableRowClassName = ({ row }: { row: any }) => {
       if (row.state === 1) {
@@ -118,6 +137,12 @@ export default defineComponent({
 
     const downloadClick = (val: any) => {
       window.location.href = `http://localhost:7777/homework/download/${val.fileName}`;
+    };
+
+    const downloadAllClick = () => {
+      if (numberValue.value != "") {
+        window.location.href = `http://localhost:7777/homework/compressHomework/${numberValue.value}`;
+      }
     };
 
     const query = async () => {
@@ -207,6 +232,9 @@ export default defineComponent({
       downloadClick,
       inputValue,
       query,
+      numberValue,
+      options,
+      downloadAllClick,
     };
   },
 });
@@ -227,6 +255,12 @@ export default defineComponent({
     }
     .el-button {
       margin-top: 7px;
+    }
+    .el-select {
+      margin-top: 7px;
+      margin-right: 10px;
+      margin-left: 50px;
+      width: 100px;
     }
   }
   .homework-main {
