@@ -4,6 +4,22 @@
       <el-button size="small" type="primary" @click="addCertClick"
         ><el-icon><Plus /></el-icon
       ></el-button>
+      <el-select v-model="type" size="small">
+        <el-option
+          v-for="(item, index) in options"
+          :key="index"
+          :label="item.label"
+          :value="item.value"
+        />
+      </el-select>
+      <div class="input">
+        <el-input
+          v-model="inputValue"
+          placeholder="请输入学员编号"
+          size="small"
+        />
+      </div>
+      <el-button size="small" @click="query">查询</el-button>
     </div>
     <div style="padding: 20px 30px" v-if="skeletonFlag">
       <el-skeleton :rows="5" animated />
@@ -70,9 +86,28 @@ export default defineComponent({
     const total = ref(0);
     const currentPage = ref(1);
     const type = ref("");
+    const inputValue = ref("");
     const keyWord = ref("");
     const certForm = ref<any>(undefined);
     const certType = ref("");
+    const options = [
+      {
+        label: "All",
+        value: "",
+      },
+      {
+        label: "结业证书",
+        value: "train",
+      },
+      {
+        label: "应用竞赛证书",
+        value: "apply",
+      },
+      {
+        label: "开发竞赛证书",
+        value: "develop",
+      },
+    ];
 
     const addCertClick = () => {
       certType.value = "add";
@@ -98,6 +133,21 @@ export default defineComponent({
         tableData.value = data.data.content;
         total.value = data.data.totalElements;
         notice("success", "成功", "删除成功");
+      }
+    };
+
+    const query = async () => {
+      keyWord.value = inputValue.value;
+      const data = await certfuzzyQuery({
+        type: type.value,
+        keyWord: keyWord.value,
+        page: 0,
+        size: 20,
+      });
+      if (data != null && (data as any).code === 0) {
+        tableData.value = data.data.content;
+        total.value = data.data.totalElements;
+        currentPage.value = 1;
       }
     };
 
@@ -168,7 +218,10 @@ export default defineComponent({
       addCertClick,
       edit,
       returnUpdateCert,
-      delClick
+      delClick,
+      options,
+      inputValue,
+      query,
     };
   },
 });
@@ -181,8 +234,19 @@ export default defineComponent({
     height: 40px;
     background: rgba($color: #545c64, $alpha: 0.5);
     padding: 0 20px;
+    display: flex;
     .el-button {
       margin-top: 7px;
+    }
+    .el-select {
+      margin-top: 7px;
+      margin-right: 10px;
+      margin-left: 10px;
+      width: 100px;
+    }
+    .input {
+      margin-top: 7px;
+      margin-right: 10px;
     }
   }
   .cert-main {
