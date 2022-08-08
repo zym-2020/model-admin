@@ -23,4 +23,6 @@ public interface UserService {
     void batchInsert(MultipartFile file, int sheetNumber);
 
     String checkUserId(String userId);
+
+    void setFinishedCount();
 }

@@ -2,7 +2,9 @@ package njnu.edu.back.service.impl;
 
 import njnu.edu.back.common.exception.MyException;
 import njnu.edu.back.common.result.ResultEnum;
+import njnu.edu.back.dao.HomeworkRepository;
 import njnu.edu.back.dao.UserRepository;
+import njnu.edu.back.pojo.Homework;
 import njnu.edu.back.pojo.User;
 import njnu.edu.back.service.UserService;
 import org.apache.poi.hssf.usermodel.HSSFFormulaEvaluator;
@@ -22,6 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -35,6 +38,9 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    HomeworkRepository homeworkRepository;
 
     @Override
     public Page<User> fuzzyQuery(String type, String keyWord, int page, int size) {
@@ -83,7 +89,7 @@ public class UserServiceImpl implements UserService {
         if(!memberId.equals("") && (userRepository.findByMemberId(memberId)) != null) {
             throw new MyException(-99, "学员编号已经存在!");
         }
-
+        user.setFinishedCount(0);
         userRepository.save(user);
         Sort sort = Sort.by(Sort.Direction.DESC, "id");
         Pageable pageable = PageRequest.of(page, size, sort);
@@ -111,7 +117,7 @@ public class UserServiceImpl implements UserService {
             for(int i = 1703; i <= sheet.getLastRowNum(); i++) {
                 XSSFRow row = sheet.getRow(i);
                 System.out.println(i);
-                User user = new User(null, "", row.getCell(2).getStringCellValue(), row.getCell(7).getStringCellValue(), NumberToTextConverter.toText(row.getCell(1).getNumericCellValue()));
+                User user = new User(null, "", row.getCell(2).getStringCellValue(), row.getCell(7).getStringCellValue(), NumberToTextConverter.toText(row.getCell(1).getNumericCellValue()), 0);
                 userRepository.save(user);
 //                System.out.println(NumberToTextConverter.toText(row.getCell(2).getNumericCellValue()) + row.getCell(1).getStringCellValue() + row.getCell(8).getStringCellValue());
             }
@@ -128,6 +134,16 @@ public class UserServiceImpl implements UserService {
             return optionalUser.get().getName();
         } else {
             throw new MyException(ResultEnum.NO_OBJECT);
+        }
+    }
+
+    @Override
+    public void setFinishedCount() {
+        List<User> users = userRepository.findAll();
+        for(User user : users) {
+            List<Homework> homeworks = homeworkRepository.findAllByMemberIdAndState(user.getMemberId(), 1);
+            user.setFinishedCount(homeworks.size());
+            userRepository.save(user);
         }
     }
 }

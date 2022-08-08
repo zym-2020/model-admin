@@ -23,4 +23,7 @@ public interface UserRepository extends MongoRepository<User, String> {
     User findByMemberId(String memberId);
     User findByEmail(String email);
     User findByTeamId(String teamId);
+
+    Page<User> findAllByFinishedCountGreaterThanEqual(int count, Pageable pageable);
+    Page<User> findAllByMemberIdAndFinishedCountGreaterThanEqual(String memberId, int count, Pageable pageable);
 }

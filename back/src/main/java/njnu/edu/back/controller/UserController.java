@@ -62,4 +62,15 @@ public class UserController {
     public JsonResult checkUserId(@PathVariable String userId) {
         return ResultUtils.success(userService.checkUserId(userId));
     }
+
+    /**
+     * @Description:临时增加的接口，给user表增加一个finishedCount字段
+     * @Author: Yiming
+     * @Date: 2022/8/8
+     */
+    @RequestMapping(value = "/setFinishedCount", method = RequestMethod.POST)
+    public JsonResult setFinishedCount() {
+        userService.setFinishedCount();
+        return ResultUtils.success();
+    }
 }

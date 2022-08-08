@@ -11,10 +11,28 @@
         <el-icon><User /></el-icon>
         <span>用户管理</span>
       </el-menu-item>
-      <el-menu-item index="2" @click="menuClick">
+      <el-sub-menu index="2">
+        <template #title>
+          <el-icon><Document /></el-icon>
+          <span>作业管理</span>
+        </template>
+        <el-menu-item index="2-1" @click="menuClick">
+          <template #title>
+            <el-icon><Document /></el-icon>
+            <span>作业</span>
+          </template>
+        </el-menu-item>
+        <el-menu-item index="2-2" @click="menuClick">
+          <template #title>
+            <el-icon><User /></el-icon>
+            <span>人员</span>
+          </template>
+        </el-menu-item>
+      </el-sub-menu>
+      <!-- <el-menu-item index="2" @click="menuClick">
         <el-icon><Document /></el-icon>
         <span>作业管理</span>
-      </el-menu-item>
+      </el-menu-item> -->
       <el-menu-item index="3" @click="menuClick">
         <el-icon><Menu /></el-icon>
         <span>应用竞赛</span>
@@ -40,8 +58,10 @@ export default defineComponent({
     const menuClick = (val: any) => {
       if (val.index === "1") {
         router.push({ path: "/user" });
-      } else if (val.index === "2") {
+      } else if (val.index === "2-1") {
         router.push({ path: "/homework" });
+      } else if (val.index === "2-2") {
+        router.push({ path: "/list" });
       } else if (val.index === "3") {
         router.push({ path: "/apply" });
       } else if (val.index === "4") {
@@ -59,7 +79,9 @@ export default defineComponent({
         if (newVal === "User") {
           active.value = "1";
         } else if (newVal === "Homework") {
-          active.value = "2";
+          active.value = "2-1";
+        } else if (newVal === "List") {
+          active.value = "2-2";
         } else if (newVal === "Apply") {
           active.value = "3";
         } else if (newVal === "Develop") {
@@ -69,7 +91,6 @@ export default defineComponent({
         }
       }
     );
-
 
     return {
       active,

@@ -56,3 +56,8 @@ export async function updateCert(jsonData: UpdateCertJsonData) {
 export async function delCert(jsonData: DelCertJsonData) {
     return await del(`/cert/delCert`, jsonData)
 }
+
+//list相关接口
+export async function getList(jsonData: { number: number, keyword: string, page: number, size: number }) {
+    return await post(`/list/getList`, jsonData)
+}

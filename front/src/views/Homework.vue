@@ -125,7 +125,6 @@ export default defineComponent({
 
     const tableRowClassName = ({ row }: { row: any }) => {
       if (row.state === 1) {
-        console.log(1);
         return "success-row";
       }
     };
@@ -185,12 +184,12 @@ export default defineComponent({
       }
     };
 
-    const getModelName = (number: number) => {
-      if (number === 1) {
+    const getModelName = (number: string) => {
+      if (number === "1") {
         return "GeoDetector模型";
-      } else if (number === 2) {
+      } else if (number === "2") {
         return "GeoSOS模型";
-      } else if (number === 3) {
+      } else if (number === "3") {
         return "HASM模型";
       } else {
         return "GWmodelS模型";
