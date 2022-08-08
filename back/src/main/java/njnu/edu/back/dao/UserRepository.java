@@ -6,6 +6,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * Created with IntelliJ IDEA.
  *
@@ -26,4 +28,6 @@ public interface UserRepository extends MongoRepository<User, String> {
 
     Page<User> findAllByFinishedCountGreaterThanEqual(int count, Pageable pageable);
     Page<User> findAllByMemberIdAndFinishedCountGreaterThanEqual(String memberId, int count, Pageable pageable);
+
+    List<User> findAllByFinishedCountGreaterThanEqual(int count);
 }

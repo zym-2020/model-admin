@@ -139,6 +139,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .list-body {
   height: 100%;
+  position: relative;
   .list-head {
     height: 40px;
     background: rgba($color: #545c64, $alpha: 0.5);
@@ -161,6 +162,14 @@ export default defineComponent({
   }
   .list-main {
     padding: 20px 30px;
+  }
+  .pages {
+    position: absolute;
+    width: 400px;
+    bottom: 20px;
+    left: calc(50% - 200px);
+    display: flex;
+    justify-content: center;
   }
 }
 </style>

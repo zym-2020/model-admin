@@ -270,5 +270,13 @@ export default defineComponent({
       }
     }
   }
+  .pages {
+    position: absolute;
+    width: 400px;
+    bottom: 20px;
+    left: calc(50% - 200px);
+    display: flex;
+    justify-content: center;
+  }
 }
 </style>

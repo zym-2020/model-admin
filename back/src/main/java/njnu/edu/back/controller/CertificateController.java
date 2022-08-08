@@ -50,4 +50,14 @@ public class CertificateController {
         int size = jsonObject.getIntValue("size");
         return ResultUtils.success(certificateService.delCert(id, type, keyWord, page, size));
     }
+
+    @RequestMapping(value = "/importList/{count}", method = RequestMethod.POST)
+    public JsonResult importList(@PathVariable int count) {
+        return ResultUtils.success(certificateService.importList(count));
+    }
+
+    @RequestMapping(value = "/checkFile/{fileNumber}", method = RequestMethod.GET)
+    public JsonResult checkFile(@PathVariable String fileNumber) {
+        return ResultUtils.success(certificateService.checkFile(fileNumber));
+    }
 }

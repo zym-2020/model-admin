@@ -57,6 +57,14 @@ export async function delCert(jsonData: DelCertJsonData) {
     return await del(`/cert/delCert`, jsonData)
 }
 
+export async function importList(count: number) {
+    return await post(`/cert/importList/${count}`)
+}
+
+export async function checkFile(fileNumber: string) {
+    return await get(`/cert/checkFile/${fileNumber}`)
+}
+
 //list相关接口
 export async function getList(jsonData: { number: number, keyword: string, page: number, size: number }) {
     return await post(`/list/getList`, jsonData)
