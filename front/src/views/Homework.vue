@@ -135,12 +135,12 @@ export default defineComponent({
     };
 
     const downloadClick = (val: any) => {
-      window.location.href = `http://localhost:7777/homework/download/${val.fileName}`;
+      window.location.href = `http://172.21.213.125:7777/homework/download/${val.fileName}`;
     };
 
     const downloadAllClick = () => {
       if (numberValue.value != "") {
-        window.location.href = `http://localhost:7777/homework/compressHomework/${numberValue.value}`;
+        window.location.href = `http://172.21.213.125:7777/homework/compressHomework/${numberValue.value}`;
       }
     };
 

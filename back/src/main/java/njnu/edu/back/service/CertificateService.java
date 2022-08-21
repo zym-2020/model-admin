@@ -3,6 +3,7 @@ package njnu.edu.back.service;
 import njnu.edu.back.pojo.Certificate;
 import org.springframework.data.domain.Page;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 /**
@@ -24,4 +25,6 @@ public interface CertificateService {
     Map<String, Object> importList(int count);
 
     int checkFile(String fileNumber);
+
+    void exportExcel(String type, HttpServletResponse response);
 }

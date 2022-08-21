@@ -8,6 +8,8 @@ import njnu.edu.back.service.CertificateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * Created with IntelliJ IDEA.
  *
@@ -59,5 +61,10 @@ public class CertificateController {
     @RequestMapping(value = "/checkFile/{fileNumber}", method = RequestMethod.GET)
     public JsonResult checkFile(@PathVariable String fileNumber) {
         return ResultUtils.success(certificateService.checkFile(fileNumber));
+    }
+
+    @RequestMapping(value = "/exportExcel/{type}", method = RequestMethod.GET)
+    public void exportExcel(@PathVariable String type, HttpServletResponse response) {
+        certificateService.exportExcel(type, response);
     }
 }

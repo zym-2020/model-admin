@@ -33,7 +33,7 @@
             <el-button size="small">导入名单</el-button>
           </template>
         </el-popconfirm>
-
+        <el-button size="small" @click="exportClick">导出培训班名单</el-button>
         <el-button size="small">批量删除</el-button>
       </div>
     </div>
@@ -240,6 +240,10 @@ export default defineComponent({
       importListFlag.value = true;
     };
 
+    const exportClick = () => {
+      window.location.href = "http://172.21.213.125:7777/cert/exportExcel/train"
+    }
+
     const fileState = async (fileNumber: string) => {
       if (fileNumber === undefined) {
         console.log(undefined);
@@ -291,6 +295,7 @@ export default defineComponent({
       importListFlag,
       returnNumber,
       fileState,
+      exportClick
     };
   },
 });
